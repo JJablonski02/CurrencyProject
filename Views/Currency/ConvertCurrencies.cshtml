@@ -1,0 +1,52 @@
+﻿@{
+    ViewBag.Title = "Currency Converter";
+}
+
+<h2>Twój lokalny kantor walut</h2>
+
+@using (Html.BeginForm("ConvertCurrencies", "currency", FormMethod.Post))
+{
+    <div>
+        @Html.Label("Wymień z:")
+        @Html.DropDownList("fromCurrency", (SelectList)ViewBag.CurrencyList, "Wybierz walutę")
+    </div>
+    <div>
+        @Html.Label("Wymień do:")
+        @Html.DropDownList("toCurrency", (SelectList)ViewBag.CurrencyList, "Wybierz walutę")
+    </div>
+    <div>
+        @Html.Label("Ilość:")
+        @Html.TextBox("amount")
+    </div>
+    <div>
+
+        @Html.Label("Wynik konwersji:")
+
+    </div>
+    <div>
+        <input type="submit" value="Wymień" />
+    </div>
+}
+
+
+@section Scripts {
+    <script>
+        $(function () {
+            $("Wymień").submit(function (e) {
+                e.preventDefault();
+                $.ajax({
+                    url: this.action,
+                    type: this.method,
+                    data: $(this).serialize(),
+                    success: function (result) {
+                        $("#result").html(result);
+                    }
+                });
+            });
+        });
+    </script>
+}
+
+
+
+
