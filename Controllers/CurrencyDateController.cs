@@ -23,52 +23,11 @@ namespace CurrencyProject.Controllers
             var currencyList = new SelectList(currencyCodes);
             ViewBag.currencyList = currencyList;
 
+
             return View();
 
         }
-        //[HttpPost]
-        //public async Task<ActionResult> ConvertionByTime(string fromRate, string dateTime)
-        //{
-        //    var exchangeRate = await CalendarRate(fromRate, dateTime);
 
-        //    var result = exchangeRate;
-        //    return View(result);
-        //}
-
-
-
-        //private const string nbpApiDateUrl = RatesExchangeServices.datetimeReviewUrl;
-
-        //public async Task<Dictionary<string, decimal>> CalendarRate(string dateTime, string fromRate)
-        //{
-        //    using (var client = new HttpClient())
-        //    {
-        //        client.BaseAddress = new Uri(nbpApiDateUrl);
-
-        //        client.DefaultRequestHeaders.Accept.Clear();
-        //        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-        //        HttpResponseMessage response = client.GetAsync($"a/{fromRate}/{dateTime}/").Result;
-
-        //        if (response.IsSuccessStatusCode)
-        //        {
-        //            var json = await response.Content.ReadAsStringAsync();
-        //            dynamic data = JsonConvert.DeserializeObject<RootDTO>(json);
-        //            var rates = new Dictionary<string, decimal>();
-
-        //            foreach (var rate in data.rates)
-        //            {
-        //                rates[data.code] = Convert.ToDecimal(rate.mid);
-        //            }
-        //            return rates;
-        //        }
-        //        else
-        //        {
-        //            throw new Exception("Valid connection with Api");
-        //        }
-
-        //    }
-        //}
         private const string nbpApiTableUrl = RatesExchangeServices.datetimeReviewUrl;
         public const string datetimeReviewUrl = "http://api.nbp.pl/api/exchangerates/rates/a/{0}/{1}/";
         [HttpPost]
@@ -94,7 +53,7 @@ namespace CurrencyProject.Controllers
                 }
                 else
                 {
-                    ViewBag.ErrorMessage = "Valid connection with Api."; 
+                    throw new Exception("Valid connection with Api");
                 }
                 return View();
             }

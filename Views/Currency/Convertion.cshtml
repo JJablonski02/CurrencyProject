@@ -19,11 +19,10 @@
         @Html.TextBox("amount")
     </div>
     <div>
-        @Html.Label("Wynik konwersji:")
+        @Html.Label($"Za {ViewBag.amountNumber} {ViewBag.fromCurrencyCode} otrzymasz {ViewBag.Result} {ViewBag.toCurrencyCode}")
     </div>
     <div>
         <input type="submit" value="Wymień" />
-        <span id="result"></span>
     </div>
 }
 
@@ -45,7 +44,3 @@
         });
     </script>
 }
-
-
-
-

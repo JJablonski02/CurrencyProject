@@ -58,38 +58,47 @@ namespace CurrencyProject.Controllers
         private const string nbpApiUrl = RatesExchangeServices.exchangeratesUrl;
 
         //Akcja wyświetlająca widok
+        
         public IActionResult ConvertCurrencies()
         {
-            //Pobiera listę kodów walut z metody
+
             var currencyCodes = GetCurrencyCodes();
-
-            //Stworzenie SelectList z kodami walut
             var currencyList = new SelectList(currencyCodes);
-
-            //Przekazanie SelectList do widoku
             ViewBag.currencyList = currencyList;
 
             return View();
         }
-        
+
         //Akcja przeliczająca waluty
-        
+
+        [HttpPost]
         public async Task<ActionResult> Convertion(string fromCurrency, string toCurrency, decimal amount)
         {
             //Pobieramy kursy walut
             var exchangeRate1 = await GetExchangeRateFrom(fromCurrency);
             var exchangeRate2 = await GetExchangeRateTo(toCurrency);
-
-            //Przeliczamy kwotę
             var result = amount * exchangeRate1[fromCurrency] / exchangeRate2[toCurrency];
 
-            //Zwracamy wynik w widoku
+            var roundedResult = Math.Round(result, 4);
 
-            ViewBag.result = result;    
+            ViewBag.Result = roundedResult;
 
-            return View("ConvertCurrencies");
+            var amountNumber = amount;
+            ViewBag.amountNumber = amountNumber;
+
+            var fromCurrencyCode = fromCurrency;
+            ViewBag.fromCurrencyCode = fromCurrencyCode;
+
+            var toCurrencyCode = toCurrency;
+            ViewBag.toCurrencyCode = toCurrencyCode;
+
+            var currencyCodes = GetCurrencyCodes();
+            var currencyList = new SelectList(currencyCodes);
+
+            ViewBag.currencyList = currencyList;
+
+            return View();
         }
-
         //Metoda pobierająca listę kodów walut
         private List<string> GetCurrencyCodes()
         {

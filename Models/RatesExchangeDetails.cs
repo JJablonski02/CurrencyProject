@@ -43,17 +43,6 @@ namespace CurrencyProject.Models
         public string currency { get; set; }
     }
 
-    //public class ExchangeRate
-    //{
-    //    public decimal mid { get; set; }
-    //}
-    //public class CurrencyViewModel
-    //{
-    //    public List<string> Currencies { get; set; }
-    //    public string SelectedCurrency { get; set; }
-    //}
-
-    
     public class ExchangeRate
     {
         public string No { get; set; }
