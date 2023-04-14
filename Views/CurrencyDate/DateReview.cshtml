@@ -1,38 +1,44 @@
-﻿
+﻿@{
+    ViewData["Title"] = "Kursy walut z przeszłości";
+}
 
-<h1>Kursy walut z przeszłości</h1>
+<h1>@ViewData["Title"]</h1>
 
 @model DateTime
+@using (@Html.BeginForm("DateReviewSubmitted", "CurrencyDate", FormMethod.Post))
+{
+    <div class="form-group">
+        @Html.Label("Wybierz walutę")
+    @Html.DropDownList("fromCurrency", (SelectList)ViewBag.currencyList, "Wybierz walutę", new {@required =true})
+        <div class="invalid-feedback">
+            Wybierz walutę.
+        </div>
+    </div>
 
-<form method="post">
     <div class="form-group">
-        <label for="currencyCode"> Wymień z:</label>
-        @Html.DropDownList("fromCurrency", (SelectList)ViewBag.CurrencyList, "Wybierz walutę")
+        @Html.Label("Wybierz datę")
+    <input type="date" id="fromDate" name="fromDate" min="2002-01-02" max="2024-01-01" value="@Model.ToString("yyyy-MM-dd")" required>
     </div>
     <div class="form-group">
-        <label for="fromDate">Wybierz datę dla której chcesz sprawdzić kurs</label>
-        <input type="date" id="fromDate" name="fromDate" min="2002-01-02" max="2024-01-01" value="@Model.ToString("yyyy-MM-dd")" required>
+        <button type="submit" class="btn btn-primary">Sprawdź</button>
     </div>
-    <div>
-        <input type="submit" value="Sprawdź" />
-        @Html.Raw(ViewBag.rate);
-    </div>
-    </form>   
+
+
+}
 
 @section Scripts {
-        <script>
-            $(function (){
-                $("Sprawdź").submit(function(e){
-                    e.preventDefault();
-                    $.ajax({
-                        url: this.action,
-                        url: this.method,
-                        data: $(this).serialize(),
-                        success: function(fromDate){
-                            $("#dateTime").html(dateTime);
+            <script>
+                $(function(){
+                    var submitButton = $('button[type="submit"]');
+                    submitButton.attr('disabled', true);
+                    $('select').change(function(){
+                        if($(this).val() !== ''){
+                            submitButton.attr('disabled', false);
+                        }
+                        else{
+                            submitButton.attr('disbled', true);
                         }
                     });
-                 });
-            });
-        </script>
+                });
+            </script>
 }

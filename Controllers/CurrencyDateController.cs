@@ -10,6 +10,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Mail;
 using System.Threading.Tasks;
+using static System.Net.WebRequestMethods;
 
 
 namespace CurrencyProject.Controllers
@@ -27,11 +28,26 @@ namespace CurrencyProject.Controllers
             return View();
 
         }
+        [HttpPost]
+
+        public async Task<ActionResult> DateReviewSubmitted(string fromCurrency, DateTime fromDate)
+        {
+            var exchangeRate = await DateReviewResult(fromCurrency, fromDate);
+            ViewBag.exchangeRate = exchangeRate;
+            
+
+            var currencyCodes = DateReviewList();
+
+            var currencyList = new SelectList(currencyCodes);
+            ViewBag.currencyList = currencyList;
+
+            return View();
+        }
 
         private const string nbpApiTableUrl = RatesExchangeServices.datetimeReviewUrl;
         public const string datetimeReviewUrl = "http://api.nbp.pl/api/exchangerates/rates/a/{0}/{1}/";
         [HttpPost]
-        public async Task<IActionResult>DateReview(string fromCurrency, DateTime fromDate)
+        public async Task<ActionResult>DateReviewResult(string fromCurrency, DateTime fromDate)
         {
             using (var client = new HttpClient())
             {
@@ -50,6 +66,10 @@ namespace CurrencyProject.Controllers
 
                     ViewBag.rate = rate;
                     
+                }
+                else if (!response.IsSuccessStatusCode)
+                {
+                   
                 }
                 else
                 {

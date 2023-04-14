@@ -116,7 +116,7 @@ namespace CurrencyProject.Controllers
                     var json = response.Content.ReadAsStringAsync().Result;
                     dynamic data = JsonConvert.DeserializeObject(json);
                     var currencies = new List<string>();
-
+                    
                     foreach (var rate in data[0].rates)
                     {
                         currencies.Add(rate.code.ToString());

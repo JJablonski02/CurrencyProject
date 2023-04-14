@@ -22,7 +22,7 @@
         @Html.Label($"Za {ViewBag.amountNumber} {ViewBag.fromCurrencyCode} otrzymasz {ViewBag.Result} {ViewBag.toCurrencyCode}")
     </div>
     <div>
-        <input type="submit" value="Wymień" />
+        <button type="submit" class="btn btn-primary">Wymień</button>
     </div>
 }
 
@@ -30,16 +30,15 @@
 @section Scripts {
     <script>
         $(function () {
-            $("Convertion").submit(function (e) {
-                e.preventDefault();
-                $.ajax({
-                    url: this.action,
-                    type: this.method,
-                    data: $(this).serialize(),
-                    success: function (result) {
-                        $("#result").html(result);
-                    }
-                });
+            var submitButton = $('button[type="submit"]');
+            submitButton.attr('enabled', true);
+            $('select').change(function () {
+                if ($(this).val() !== '') {
+                    submitButton.attr('enabled', false);
+                }
+                else {
+                    submitButton.attr('enabled', true);
+                }
             });
         });
     </script>
