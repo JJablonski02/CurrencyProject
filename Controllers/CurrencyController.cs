@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using RatesExchangeApi;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -27,33 +28,61 @@ namespace CurrencyProject.Controllers
         [HttpGet]
         public async Task<IActionResult> Home()
         {
-
-            IList<Rates> rates = new List<Rates>();
-            using (var client = new HttpClient())
+            if (Request.Method == HttpMethod.Get.Method)
             {
 
+                IList<Rates> rates = new List<Rates>();
+                using (var client = new HttpClient())
+                {
+
+                    client.BaseAddress = new Uri(RatesExchangeServices.baseUrl);
+                    client.DefaultRequestHeaders.Accept.Clear();
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                    HttpResponseMessage getData = await client.GetAsync("api/exchangerates/tables/A");
+
+                    if (getData.IsSuccessStatusCode)
+                    {
+                        string results = getData.Content.ReadAsStringAsync().Result;
+                        var data = JsonConvert.DeserializeObject<List<Root>>(results);
+                        var currencies = data.First().rates;
+                        return View(currencies);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Valid connection with Api.");
+                    }
+                    ViewData.Model = rates;
+                }
+            }
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> HomeGetData()
+        {
+            using (var client = new HttpClient())
+            {
                 client.BaseAddress = new Uri(RatesExchangeServices.baseUrl);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
                 HttpResponseMessage getData = await client.GetAsync("api/exchangerates/tables/A");
 
-                if (getData.IsSuccessStatusCode)
+                if(getData.IsSuccessStatusCode)
                 {
-                    string results = getData.Content.ReadAsStringAsync().Result;
-                    var data = JsonConvert.DeserializeObject<List<Root>>(results);
-                    var currencies = data.First().rates;
-                    return View(currencies);
+                    var json = getData.Content.ReadAsStringAsync().Result;
+                    dynamic data = JsonConvert.DeserializeObject<RateDTO>(json);
+
+                    var noDate = data.no;
+                    ViewBag.noDate = noDate;
                 }
-                else
-                {
-                    Console.WriteLine("Valid connection with Api.");
-                }
-                ViewData.Model = rates;
-                
             }
             return View();
         }
+                
+               
+           
 
         private const string nbpApiUrl = RatesExchangeServices.exchangeratesUrl;
 

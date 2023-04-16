@@ -3,6 +3,7 @@ using CurrencyProject.DTOs;
 using Intuit.Ipp.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Nager.Date;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Mail;
 using System.Threading.Tasks;
+using System.Globalization;
 using static System.Net.WebRequestMethods;
 
 
@@ -65,11 +67,9 @@ namespace CurrencyProject.Controllers
                     var rate = data.rates[0].mid;
 
                     ViewBag.rate = rate;
-                    
                 }
                 else if (!response.IsSuccessStatusCode)
                 {
-                   
                 }
                 else
                 {

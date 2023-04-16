@@ -1,47 +1,36 @@
-﻿@model List<CurrencyProject.Models.Rates>
+﻿@model List<CurrencyProject.Models.Rates>    
+@*<html>
+    <body>
+        <main class="main">
+            <header class="header">
+                <nav class="breadcrumb"></nav>
+                <h1 class="page-title">Tabela nr 073/A/NBP/2023 z dnia 2023-04-14</h1>
+            </header>
+        </main>
+    </body>
+</html>*@
 
+<body>
+    <header class="header">
+        <h1 class="page-title">Tabela nr 073/A/NBP/2023 z dnia 17/04/2023r. @ViewBag.noDate</h1>
+    </header>
+
+</body>
+
+    <div class="main-container">
+        <h3>Kursy średnie walut obcych - tabela A</h3>
+        <p>
+            bieżące kursy średnie walut obcych w złotych określonych w 2 pkt 1 i 2 uchwały Nr 51/2002 Zarządu Narodowego Banku Polskiego z dnia 23 września 2002 r. w sprawie wyliczania i
+            ogłaszania bieżących kursów walut obcych (Dz. Urz. NBP z 2023 r. poz. 1)
+        </p>
+        </div>
     
-    <style>
-        .content-table{
-        border-collapse:collapse;
-        margin: 25px;
-        font-size: 0.7cm;
-        min-width: 400px;
-        border-radius: 5px 5px 0 0;
-        overflow: hidden;
-        box-shadow: 0 0 23px rgba(0, 0, 0, 0.15);
-        }
-        .content-table thead tr {
-            background-color : #009879;
-            color: #ffffff;
-            text-align: left;
-            font-weight: bold;
-        }
-        .content-table th,
-        .content-table td{
-            padding: 12px 15px;
-        }
-        .content-table tbody tr{
-            border-bottom: 1px solid #dddddd
-        }
-        .content-table tbody tr:nth-of-type(even){
-            background-color: #f3f3f3;
-        }
-        .content-table tbody tr:last-of-type{
-            border-bottom: 2px solid #009879
-        }
-        .content-table h1{
-            color: #009879;
-        }
-    </style>
-<table class="content-table">
-    <h2>Aktualne kursy walut:</h2>
+<table class="content-table table-hover table-striped">
     <thead>
-        
         <tr>
         <th>@Html.DisplayName("Nazwa waluty")</th>
-        <th>@Html.DisplayName("Kod ISO")</th>
-        <th>@Html.DisplayName("Cena")</th>
+        <th>@Html.DisplayName("Kod ISO waluty")</th>
+        <th>@Html.DisplayName("Kurs średni")</th>
         </tr>
     </thead>
     <tbody>
@@ -49,9 +38,70 @@
         {
             <tr>
                 <td>@item.currency</td>
-                <td>@item.code</td>
+                <td>1 @item.code</td>
                 <td>@item.mid</td>
             </tr>
         }
     </tbody>
 </table>
+
+
+
+<style>
+    .main-container{
+        margin-top: 20px;
+        font-size: 18px;
+        margin-left: -100px;
+        margin-right: -50px;
+
+    }
+        .content-table{
+        margin: 25px;
+        font-size: 0.7cm;
+        width: 1300px;
+        border-radius: 5px 5px 0 0;
+        overflow: hidden;
+        box-shadow: 0 0 23px rgba(0, 0, 0, 0.15);
+        margin-left: -100px;
+        margin-right: auto;
+        }
+        .content-table thead tr {
+            background-color : #009879;
+            color: #ffffff;
+            text-align: center;
+            font-weight: bold;
+            height: 80px;
+        }
+        .content-table th,
+        .content-table td{
+            padding: 12px 15px;
+        }
+        .content-table tbody tr{
+            border-bottom: 1px solid #dddddd;      
+        }
+        .content-table tbody tr:nth-of-type(even){
+            background-color: white;
+        }
+        .content-table h1{
+            color: #009879;
+        }
+        .content-table tbody tr{
+            height: 80px;
+            text-align: center;
+        }
+
+        .header{
+            background-color: #f7f7f7;
+            padding: 60px;
+            text-align: center;
+            margin-left:-400px;
+            margin-right:auto;
+            margin-top: -20px;
+            min-width: 1900px;
+            width: 100%;
+        }
+       
+    </style>
+
+
+

@@ -28,8 +28,8 @@
 @if (ViewBag.exchangeRate != null)
 {
     <div class="form-group">
-        <label>Exchange Rate:</label>
-        <p>@ViewBag.rate</p>
+        <label>Tego dnia kurs wynosił:</label>
+        <p>@ViewBag.rate @ViewBag.fromCurrency</p>
     </div>
 }
 
@@ -37,13 +37,13 @@
     <script>
         $(function () {
             var submitButton = $('button[type="submit"]');
-            submitButton.attr('disabled', true);
+            submitButton.attr('enabled', true);
             $('select').change(function () {
                 if ($(this).val() !== '') {
-                    submitButton.attr('disabled', false);
+                    submitButton.attr('enabled', false);
                 }
                 else {
-                    submitButton.attr('disbled', true);
+                    submitButton.attr('enabled', true);
                 }
             });
         });
