@@ -56,7 +56,7 @@ namespace CurrencyProject.Controllers
                 var url = string.Format(datetimeReviewUrl, fromCurrency, fromDate.ToString("yyyy-MM-dd"));
                 var response = await client.GetAsync(url);
 
-                if(response.IsSuccessStatusCode)
+                if (response.IsSuccessStatusCode)
                 {
                     var json = await response.Content.ReadAsStringAsync();
                     var data = JsonConvert.DeserializeObject<RootDTO>(json);
@@ -70,6 +70,20 @@ namespace CurrencyProject.Controllers
                 }
                 else if (!response.IsSuccessStatusCode)
                 {
+                    var urlMinus = fromDate.AddDays(-1);
+                    var newUrl = string.Format(datetimeReviewUrl, fromCurrency, urlMinus.ToString("yyyy-MM-dd"));
+                    var responseSecond = await client.GetAsync(newUrl);
+
+                    var json = await responseSecond.Content.ReadAsStringAsync();
+                    var data = JsonConvert.DeserializeObject<RootDTO>(json);
+
+                    ViewBag.fromCurrency = fromCurrency;
+                    ViewBag.fromDate = fromDate;
+
+                    var rate = data.rates[0].mid;
+
+                    ViewBag.rate = rate;
+
                 }
                 else
                 {

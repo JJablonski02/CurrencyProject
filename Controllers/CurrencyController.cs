@@ -24,7 +24,6 @@ namespace CurrencyProject.Controllers
 
 
 
-        // GET: HOME
         [HttpGet]
         public async Task<IActionResult> Home()
         {
@@ -46,6 +45,13 @@ namespace CurrencyProject.Controllers
                         string results = getData.Content.ReadAsStringAsync().Result;
                         var data = JsonConvert.DeserializeObject<List<Root>>(results);
                         var currencies = data.First().rates;
+
+                        var noNum = data.FirstOrDefault().no;
+                        ViewBag.noNum = noNum;
+
+                        var effectiveDate = data.FirstOrDefault().effectiveDate;
+                        ViewBag.effectiveDate = effectiveDate;
+
                         return View(currencies);
                     }
                     else
@@ -56,33 +62,7 @@ namespace CurrencyProject.Controllers
                 }
             }
             return View();
-        }
-
-        [HttpPost]
-        public async Task<ActionResult> HomeGetData()
-        {
-            using (var client = new HttpClient())
-            {
-                client.BaseAddress = new Uri(RatesExchangeServices.baseUrl);
-                client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-                HttpResponseMessage getData = await client.GetAsync("api/exchangerates/tables/A");
-
-                if(getData.IsSuccessStatusCode)
-                {
-                    var json = getData.Content.ReadAsStringAsync().Result;
-                    dynamic data = JsonConvert.DeserializeObject<RateDTO>(json);
-
-                    var noDate = data.no;
-                    ViewBag.noDate = noDate;
-                }
-            }
-            return View();
-        }
-                
-               
-           
+        }         
 
         private const string nbpApiUrl = RatesExchangeServices.exchangeratesUrl;
 
