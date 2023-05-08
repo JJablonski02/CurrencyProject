@@ -20,8 +20,4 @@
     <PackageReference Include="RatesExchangeApi" Version="1.0.1" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Domain\" />
-  </ItemGroup>
-
 </Project>

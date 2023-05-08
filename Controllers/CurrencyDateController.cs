@@ -11,9 +11,8 @@ using System.Net.Http.Headers;
 using System.Net.Mail;
 using System.Threading.Tasks;
 using System.Globalization;
-using CurrencyProject.DTOs;
 using static System.Net.WebRequestMethods;
-
+using CurrencyProject.Data.DTOs;
 
 namespace CurrencyProject.Controllers
 {

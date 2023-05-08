@@ -1,4 +1,4 @@
-﻿namespace CurrencyProject.DTOs
+﻿namespace CurrencyProject.Data.DTOs
 {
     public class RateDTO
     {

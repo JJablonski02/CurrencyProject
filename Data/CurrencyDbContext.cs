@@ -1,4 +1,4 @@
-﻿using CurrencyProject.DTOs;
+﻿using CurrencyProject.Data.DTOs;
 using Microsoft.EntityFrameworkCore;
 
 namespace CurrencyProject.Data

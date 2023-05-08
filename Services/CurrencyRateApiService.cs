@@ -1,5 +1,5 @@
 ﻿using CurrencyProject.Api;
-using CurrencyProject.DTOs;
+using CurrencyProject.Data.DTOs;
 using Newtonsoft.Json;
 using System.Net.Http;
 using System.Threading.Tasks;

@@ -1,6 +1,6 @@
 ﻿using CurrencyProject.Api;
 using CurrencyProject.Data;
-using CurrencyProject.DTOs;
+using CurrencyProject.Data.DTOs;
 using CurrencyProject.Models;
 using CurrencyProject.Services;
 using Intuit.Ipp.Core.Configuration;

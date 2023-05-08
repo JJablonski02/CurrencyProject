@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace CurrencyProject.DTOs
+namespace CurrencyProject.Data.DTOs
 {
     public class RootDTO
     {
