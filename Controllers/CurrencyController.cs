@@ -1,6 +1,9 @@
 ﻿using CurrencyProject.Api;
+using CurrencyProject.Data;
 using CurrencyProject.DTOs;
 using CurrencyProject.Models;
+using CurrencyProject.Services;
+using Intuit.Ipp.Core.Configuration;
 using Intuit.Ipp.Data;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -10,7 +13,10 @@ using Newtonsoft.Json.Linq;
 using RatesExchangeApi;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
 using System.Diagnostics;
+using System.Dynamic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -19,18 +25,18 @@ using System.Threading.Tasks;
 
 namespace CurrencyProject.Controllers
 {
+
     public class CurrencyController : Controller
     {
-
-
-
         [HttpGet]
         public async Task<IActionResult> Home()
         {
+            _currencyRateService.ImportDataAsync().Wait();
+
             if (Request.Method == HttpMethod.Get.Method)
             {
 
-                IList<Rates> rates = new List<Rates>();
+                IList<Rate> rates = new List<Rate>();
                 using (var client = new HttpClient())
                 {
 
@@ -56,13 +62,35 @@ namespace CurrencyProject.Controllers
                     }
                     else
                     {
-                        Console.WriteLine("Valid connection with Api.");
+                        Console.WriteLine("Invalid connection with Api.");
                     }
                     ViewData.Model = rates;
                 }
             }
             return View();
-        }         
+        }
+        //ZAPIS DO BAZY DANYCH
+
+        private readonly CurrencyRateService _currencyRateService;
+
+        public CurrencyController(CurrencyRateService currencyRateService)
+        {
+            _currencyRateService = currencyRateService;
+        }
+
+        [HttpGet("import-data")]
+        public async Task<IActionResult> ImportData()
+        {
+            try
+            {
+                await _currencyRateService.ImportDataAsync();
+                return RedirectToAction(nameof(Home));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
 
         private const string nbpApiUrl = RatesExchangeServices.exchangeratesUrl;
 
@@ -70,7 +98,7 @@ namespace CurrencyProject.Controllers
         
         public IActionResult ConvertCurrencies()
         {
-
+            
             var currencyCodes = GetCurrencyCodes();
             var currencyList = new SelectList(currencyCodes);
             ViewBag.currencyList = currencyList;
@@ -135,10 +163,11 @@ namespace CurrencyProject.Controllers
                 }
                 else
                 {
-                    throw new Exception("Valid connection with Api.");
+                    throw new Exception("Invalid connection with Api.");
                 }
             }
         }
+
         // Metoda[1] pobierająca kursy walut 
         private async Task<Dictionary<string, decimal>> GetExchangeRateFrom(string fromCurrency)
         {
@@ -165,7 +194,7 @@ namespace CurrencyProject.Controllers
                 }
                 else
                 {
-                    throw new Exception("Valid connection with Api.");
+                    throw new Exception("Invalid connection with Api.");
                 }
             }
         }
@@ -194,7 +223,7 @@ namespace CurrencyProject.Controllers
                 }
                 else
                 {
-                    throw new Exception("Valid connection with Api.");
+                    throw new Exception("Invalid connection with Api.");
                 }
             }
         }

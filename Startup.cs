@@ -1,4 +1,6 @@
+using CurrencyProject.Data;
 using CurrencyProject.Models;
+using CurrencyProject.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -26,8 +28,10 @@ namespace CurrencyProject
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            services.AddDbContext<CurrencyContext>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("CurrencyDatabase")));
+            services.AddDbContext<CurrencyDbContext>(options =>
+            options.UseSqlServer(Configuration.GetConnectionString("RatesDB")));
+            services.AddScoped<CurrencyRateService>();
+            services.AddScoped<CurrencyRateApiService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

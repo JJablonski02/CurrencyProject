@@ -1,5 +1,4 @@
 ﻿using CurrencyProject.Api;
-using CurrencyProject.DTOs;
 using Intuit.Ipp.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -12,6 +11,7 @@ using System.Net.Http.Headers;
 using System.Net.Mail;
 using System.Threading.Tasks;
 using System.Globalization;
+using CurrencyProject.DTOs;
 using static System.Net.WebRequestMethods;
 
 
@@ -28,7 +28,7 @@ namespace CurrencyProject.Controllers
 
 
             return View();
-
+            
         }
         [HttpPost]
 
@@ -87,7 +87,7 @@ namespace CurrencyProject.Controllers
                 }
                 else
                 {
-                    throw new Exception("Valid connection with Api");
+                    throw new Exception("Invalid connection with Api");
                 }
                 return View();
             }
@@ -119,7 +119,7 @@ namespace CurrencyProject.Controllers
                 }
                 else
                 {
-                    throw new Exception("Valid connection with Api");
+                    throw new Exception("Invalid connection with Api");
                 }
             }
         }

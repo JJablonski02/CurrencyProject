@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Net;
 
-namespace CurrencyProject
+namespace CurrencyProject.Api
 {
     public class BaseException : Exception
     {
@@ -16,9 +16,9 @@ namespace CurrencyProject
         {
             Code = code;
             StatusCode = HttpStatusCode.BadRequest.ToString();
-            
-        }       
+
+        }
 
     }
-    
+
 }
