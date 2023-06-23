@@ -79,7 +79,7 @@ namespace CurrencyProject.Controllers
         }
 
         [HttpGet("import-data")]
-        public async Task<IActionResult> ImportData()
+        public async Task<IActionResult> ImportDataAsync()
         {
             try
             {
@@ -164,6 +164,7 @@ namespace CurrencyProject.Controllers
                 else
                 {
                     throw new Exception("Invalid connection with Api.");
+                    
                 }
             }
         }

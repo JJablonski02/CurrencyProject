@@ -1,13 +1,15 @@
 ﻿using CurrencyProject.Data;
+using CurrencyProject.Services.Interfaces;
 using System.Threading.Tasks;
 
 
 namespace CurrencyProject.Services
 {
-    public class CurrencyRateService
+    public class CurrencyRateService : ICurrencyRateService
     {
         private readonly CurrencyRateApiService _currencyRateApiService;
         private readonly CurrencyDbContext _currencyDbContext;
+        
 
         public CurrencyRateService(CurrencyRateApiService apiservice, CurrencyDbContext dbContext)
         {

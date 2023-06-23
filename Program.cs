@@ -57,6 +57,7 @@ public static IHostBuilder CreateHostBuilder(string[] args) =>
         .ConfigureWebHostDefaults(webBuilder =>
         {
             webBuilder.UseStartup<Startup>();
+            webBuilder.UseUrls("https://localhost:51239");
         });
     }
     
