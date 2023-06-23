@@ -7,3 +7,7 @@ find there some css and javascript sections.
 Project is being still improved, so you can expect changes/upgrades in code in time.
 
 Project is fully written by me - Jakub Jablonski.
+
+# Image
+
+![Main View](https://github.com/JJablonski02/CurrencyProject/blob/master/wwwroot/podglad.png)
